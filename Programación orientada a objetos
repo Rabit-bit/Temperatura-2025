@@ -1,0 +1,81 @@
+# temperaturas_poo.py
+
+class RegistroTemperatura:
+    def __init__(self):
+        """Constructor de la clase"""
+        self.temperaturas = {}
+        self.dias = ["Lunes", "Martes", "Miércoles", "Jueves", 
+                    "Viernes", "Sábado", "Domingo"]
+    
+    def validar_temperatura(self, temp):
+        """
+        Valida que la temperatura esté en un rango razonable
+        Parámetros:
+            temp: float con la temperatura a validar
+        Retorna: bool indicando si la temperatura es válida
+        """
+        return -50 <= temp <= 50
+    
+    def ingresar_temperatura(self, dia):
+        """
+        Solicita y valida la temperatura para un día específico
+        Parámetros:
+            dia: string con el nombre del día
+        """
+        while True:
+            try:
+                temp = float(input(f"Ingrese la temperatura para {dia} (°C): "))
+                if self.validar_temperatura(temp):
+                    self.temperaturas[dia] = temp
+                    break
+                else:
+                    print("Error: Ingrese una temperatura entre -50°C y 50°C")
+            except ValueError:
+                print("Error: Ingrese un número válido")
+    
+    def registrar_semana(self):
+        """Registra las temperaturas de toda la semana"""
+        print("\nRegistro de temperaturas semanales")
+        for dia in self.dias:
+            self.ingresar_temperatura(dia)
+    
+    @property
+    def promedio(self):
+        """Calcula y retorna el promedio de temperaturas"""
+        if not self.temperaturas:
+            return 0
+        return sum(self.temperaturas.values()) / len(self.temperaturas)
+    
+    @property
+    def temperatura_maxima(self):
+        """Retorna la temperatura máxima registrada"""
+        if not self.temperaturas:
+            return None
+        return max(self.temperaturas.values())
+    
+    @property
+    def temperatura_minima(self):
+        """Retorna la temperatura mínima registrada"""
+        if not self.temperaturas:
+            return None
+        return min(self.temperaturas.values())
+    
+    def mostrar_resumen(self):
+        """Muestra un resumen de las temperaturas registradas"""
+        print("\nResumen de temperaturas:")
+        for dia in self.dias:
+            if dia in self.temperaturas:
+                print(f"{dia}: {self.temperaturas[dia]}°C")
+        
+        print(f"\nTemperatura promedio: {self.promedio:.2f}°C")
+        print(f"Temperatura máxima: {self.temperatura_maxima}°C")
+        print(f"Temperatura mínima: {self.temperatura_minima}°C")
+
+def main():
+    """Función principal del programa"""
+    registro = RegistroTemperatura()
+    registro.registrar_semana()
+    registro.mostrar_resumen()
+
+if __name__ == "__main__":
+    main()
