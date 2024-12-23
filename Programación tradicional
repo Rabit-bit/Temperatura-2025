@@ -1,0 +1,69 @@
+# temperaturas_tradicional.py
+
+def ingresar_temperatura():
+    """
+    Solicita y valida la entrada de una temperatura
+    Retorna: float con la temperatura válida
+    """
+    while True:
+        try:
+            temp = float(input("Ingrese la temperatura del día (°C): "))
+            if -50 <= temp <= 50:  # Rango razonable de temperaturas
+                return temp
+            else:
+                print("Error: Ingrese una temperatura entre -50°C y 50°C")
+        except ValueError:
+            print("Error: Ingrese un número válido")
+
+def ingresar_temperaturas_semana():
+    """
+    Solicita las temperaturas para una semana completa
+    Retorna: lista con las 7 temperaturas
+    """
+    temperaturas = []
+    dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+    
+    for dia in dias:
+        print(f"\nTemperatura para {dia}:")
+        temp = ingresar_temperatura()
+        temperaturas.append(temp)
+    
+    return temperaturas
+
+def calcular_promedio(temperaturas):
+    """
+    Calcula el promedio de las temperaturas
+    Parámetros:
+        temperaturas: lista de temperaturas
+    Retorna: float con el promedio
+    """
+    return sum(temperaturas) / len(temperaturas)
+
+def mostrar_resumen(temperaturas):
+    """
+    Muestra un resumen de las temperaturas y estadísticas
+    Parámetros:
+        temperaturas: lista de temperaturas
+    """
+    print("\nResumen de temperaturas:")
+    dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+    
+    for dia, temp in zip(dias, temperaturas):
+        print(f"{dia}: {temp}°C")
+    
+    promedio = calcular_promedio(temperaturas)
+    temp_max = max(temperaturas)
+    temp_min = min(temperaturas)
+    
+    print(f"\nTemperatura promedio: {promedio:.2f}°C")
+    print(f"Temperatura máxima: {temp_max}°C")
+    print(f"Temperatura mínima: {temp_min}°C")
+
+def main():
+    """Función principal del programa"""
+    print("Registro de Temperaturas Semanales")
+    temperaturas = ingresar_temperaturas_semana()
+    mostrar_resumen(temperaturas)
+
+if __name__ == "__main__":
+    main()
